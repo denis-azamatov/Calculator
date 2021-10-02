@@ -12,7 +12,7 @@ namespace Core
         /// </summary>
         /// <param name="expression">Выражение</param>
         /// <returns>Результат выражения</returns>
-        public async Task<decimal> Calculate(string expression)
+        public async Task<double> Calculate(string expression)
         {
             var expr = await Parser.Parse(expression);
             return expr();

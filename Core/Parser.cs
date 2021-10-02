@@ -20,7 +20,7 @@ namespace Core
         /// Парсит выражение
         /// </summary>
         /// <returns>Построеное лямбда выражение</returns>
-        private Func<decimal> ParseExpression()
+        private Func<double> ParseExpression()
         {
             var expr = ParseAddSubtract();
             var lambda = Expression.Lambda(expr, true, null).Compile();
@@ -28,7 +28,7 @@ namespace Core
             if (_tokenReader.Token != Token.End)
                 throw new Exception("Некорректный сивмол в конце строки");
 
-            return (Func<decimal>)lambda;
+            return (Func<double>)lambda;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Core
         /// </summary>
         /// <param name="expression">Выражение</param>
         /// <returns>Построеное лямбда выражение</returns>
-        public static async Task<Func<decimal>> Parse(string expression)
+        public static async Task<Func<double>> Parse(string expression)
         {
             using var parser = new Parser(new TokenReader(expression));
             return await Task.Run(() => parser.ParseExpression());

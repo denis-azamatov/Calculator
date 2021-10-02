@@ -12,7 +12,7 @@ namespace Core.Test
         public async Task ParseExpression(string expression)
         {
             var result = await Parser.Parse(expression);
-            Assert.Equal(typeof(Func<decimal>), result.GetType());
+            Assert.Equal(typeof(Func<double>), result.GetType());
         }
 
         public static IEnumerable<object[]> Data =>

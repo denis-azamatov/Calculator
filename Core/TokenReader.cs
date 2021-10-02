@@ -28,7 +28,7 @@ namespace Core
         /// <summary>
         /// Текущее число
         /// </summary>
-        public decimal Number { get; private set; }
+        public double Number { get; private set; }
 
         /// <summary>
         /// Считывает следующий токен
@@ -89,7 +89,7 @@ namespace Core
                 NextChar();
             }
 
-            Number = decimal.Parse(sb.ToString(), CultureInfo.InvariantCulture);
+            Number = double.Parse(sb.ToString(), CultureInfo.InvariantCulture);
             Token = Token.Number;
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xunit;
 
 namespace Core.Test
@@ -8,7 +7,7 @@ namespace Core.Test
     {
         [Theory]
         [MemberData(nameof(SimpleData))]
-        public void ReadTokenSuccess(string expression, decimal a, Token token, decimal b)
+        public void ReadTokenSuccess(string expression, double a, Token token, double b)
         {
             using var reader = new TokenReader(expression);
 

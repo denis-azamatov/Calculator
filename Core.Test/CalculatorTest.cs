@@ -8,7 +8,7 @@ namespace Core.Test
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task CalculateExpressions(string expression, decimal expected)
+        public async Task CalculateExpressions(string expression, double expected)
         {
             var calculator = new Calculator();
             var result = await calculator.Calculate(expression);
