@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Client.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Client
 {
@@ -14,14 +17,15 @@ namespace Client
         private static async Task Main(string[] args) =>
             await CreateHostBuilder(args).Build().Services.GetRequiredService<Program>().Run();
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddTransient<Program>();
-                    services.AddTransient<CalculatorService>();
-                    services.Configure<AppSettings>(context.Configuration.GetSection("AppSettings"));
-                });
+        private static IHostBuilder CreateHostBuilder(string[] args) => Host
+            .CreateDefaultBuilder(args)
+            .ConfigureServices((ctx, services) =>
+            {
+                services.AddGrpcClient<Calculator.CalculatorClient>(opt => opt.Address = ctx.Configuration.GetValue<Uri>("CalculationServiceAddress"));
+                services.AddTransient<CalculatorService>();
+                services.AddTransient<Program>();
+            })
+            .ConfigureLogging(builder => builder.SetMinimumLevel(LogLevel.None));
 
         /// <summary>
         /// Метод запускающий калькулятор

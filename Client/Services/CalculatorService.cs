@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Grpc.Net.Client;
-using Microsoft.Extensions.Options;
 
-namespace Client
+namespace Client.Services
 {
     /// <summary>
     /// Сервис калькулятора
     /// </summary>
-    public class CalculatorService : IDisposable
+    public class CalculatorService
     {
-        private readonly GrpcChannel _channel;
         private readonly Calculator.CalculatorClient _client;
 
-        public CalculatorService(IOptions<AppSettings> options)
-        {
-            var settings = options.Value;
-            _channel = GrpcChannel.ForAddress(settings.CalculationServiceAddress);
-            _client = new Calculator.CalculatorClient(_channel);
-        }
+        public CalculatorService(Calculator.CalculatorClient client) => _client = client;
 
         /// <summary>
         /// Расчитать выражение
@@ -34,11 +26,6 @@ namespace Client
             {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        public void Dispose()
-        {
-            _channel.Dispose();
         }
     }
 }

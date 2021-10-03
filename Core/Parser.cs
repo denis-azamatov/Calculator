@@ -23,10 +23,11 @@ namespace Core
         private Func<double> ParseExpression()
         {
             var expr = ParseAddSubtract();
-            var lambda = Expression.Lambda(expr, true, null).Compile();
 
             if (_tokenReader.Token != Token.End)
-                throw new Exception("Некорректный сивмол в конце строки");
+                throw new Exception("Некорректный символ в конце строки");
+            
+            var lambda = Expression.Lambda(expr, true, null).Compile();
 
             return (Func<double>)lambda;
         }
